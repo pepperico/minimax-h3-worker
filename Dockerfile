@@ -29,6 +29,14 @@ RUN comfy model download \
     --relative-path models/loras \
     --filename minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors
 
+# Ref2VA checkpoint — for MiniMaxH3ReferenceToVideo (up to 9 reference images + video/audio).
+# Separate from the FL2VA checkpoint above; only one is loaded at a time depending on
+# which workflow/node is used, so this only adds build/pull time, not runtime VRAM.
+RUN comfy model download \
+    --url https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors \
+    --relative-path models/diffusion_models \
+    --filename minimax_h3_ref2va_pruned_int8_convrot.safetensors
+
 # Upscale models, carried over from the earlier pod-based setup.
 RUN comfy model download \
     --url https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth \
